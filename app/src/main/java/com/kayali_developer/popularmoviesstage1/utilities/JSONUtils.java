@@ -20,7 +20,10 @@ public final class JSONUtils {
     private static final String OVERVIEW_KEY = "overview";
     private static final String VOTE_AVERAGE_KEY = "vote_average";
     private static final String RELEASE_DATE_KEY = "release_date";
-
+    // Constructor
+    private JSONUtils() {
+        throw new AssertionError();
+    }
     // Fetch a JSON response using API Url
     public static List<Movie> fetchMoviesData(String stringUrl) {
         URL url = NetworkUtils.createUrl(stringUrl);

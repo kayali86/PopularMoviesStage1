@@ -27,9 +27,10 @@ public class MainActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<List<Movie>>, MovieAdapter.MovieAdapterOnClickHandler {
 
     // Please, Put your API Key here
-    private static final String API_KEY = "dba53a04d2e1b8de6dcb8e6e47f19703";
+    private static final String API_KEY = "";
+
     private static final int LOADER_ID = 0;
-    private static final String REQUEST_URL = "https://api.themoviedb.org/3/discover/movie";
+    private static final String REQUEST_URL = "https://api.themoviedb.org/3";
     private RecyclerView moviesRecyclerView;
     private MovieAdapter movieAdapter;
     // Empty View to display when there is no data to display
@@ -100,8 +101,8 @@ public class MainActivity extends AppCompatActivity
         // Parse Url
         Uri baseUri = Uri.parse(REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendEncodedPath(sortBy);
         uriBuilder.appendQueryParameter("api_key", API_KEY);
-        uriBuilder.appendQueryParameter("sort_by", sortBy);
         return new MovieLoader(this, uriBuilder.toString());
     }
 

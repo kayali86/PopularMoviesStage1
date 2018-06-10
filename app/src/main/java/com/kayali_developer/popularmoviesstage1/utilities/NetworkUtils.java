@@ -13,6 +13,7 @@ final class NetworkUtils {
     private static final String LOG_TAG = NetworkUtils.class.getName();
     // Constructor
     private NetworkUtils() {
+            throw new AssertionError();
     }
     // Casting String Url to Url Object
     public static URL createUrl(String stringUrl) {
