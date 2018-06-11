@@ -46,11 +46,11 @@ public final class JSONUtils {
             JSONArray resultsJSONArray = baseJsonResponse.getJSONArray(RESULTS_KEY);
             for (int i = 0; i < resultsJSONArray.length(); i++) {
                 JSONObject currentMovie = resultsJSONArray.getJSONObject(i);
-                String originalTitle = currentMovie.getString(ORIGINAL_TITLE_KEY);
-                String posterPath = currentMovie.getString(POSTER_PATH_KEY);
-                String overview = currentMovie.getString(OVERVIEW_KEY);
-                String userRating = String.valueOf(currentMovie.getDouble(VOTE_AVERAGE_KEY));
-                String releaseDate = currentMovie.getString(RELEASE_DATE_KEY);
+                String originalTitle = currentMovie.optString(ORIGINAL_TITLE_KEY);
+                String posterPath = currentMovie.optString(POSTER_PATH_KEY);
+                String overview = currentMovie.optString(OVERVIEW_KEY);
+                String userRating = String.valueOf(currentMovie.optString(VOTE_AVERAGE_KEY));
+                String releaseDate = currentMovie.optString(RELEASE_DATE_KEY);
                 Movie movie = new Movie(originalTitle, posterPath, overview, userRating, releaseDate);
                 movies.add(movie);
             }

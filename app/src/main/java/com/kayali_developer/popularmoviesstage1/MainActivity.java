@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,8 +28,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<List<Movie>>, MovieAdapter.MovieAdapterOnClickHandler {
 
-    // Please, Put your API Key here
-    private static final String API_KEY = "";
+    // API Key - You can change it using gradle.properties file
+    private static final String API_KEY = BuildConfig.API_KEY;
 
     private static final int LOADER_ID = 0;
     private static final String REQUEST_URL = "https://api.themoviedb.org/3";
@@ -45,8 +47,9 @@ public class MainActivity extends AppCompatActivity
         emptyView = findViewById(R.id.empty_view);
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
         moviesRecyclerView = findViewById(R.id.movies_recycler_view);
+        int posterWidth = 700;
         GridLayoutManager layoutManager
-                = new GridLayoutManager(this, 2);
+                = new GridLayoutManager(this,  calculateBestSpanCount(posterWidth));
         moviesRecyclerView.setLayoutManager(layoutManager);
         moviesRecyclerView.setHasFixedSize(true);
         movieAdapter = new MovieAdapter(this);
@@ -54,6 +57,16 @@ public class MainActivity extends AppCompatActivity
         // Check connection and then initialize the loader manager
         loadMovieData();
     }
+
+    // Helper Method to make the layout more responsive by controlling poster width
+    private int calculateBestSpanCount(int posterWidth) {
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+        float screenWidth = outMetrics.widthPixels;
+        return Math.round(screenWidth / posterWidth);
+    }
+
     // Helper Method to Check connection and then initialize the loader manager
     private void loadMovieData() {
         // Checking state of network connectivity
