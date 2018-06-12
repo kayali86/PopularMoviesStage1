@@ -77,7 +77,12 @@ public class MainActivity extends AppCompatActivity
         if (networkInfo != null && networkInfo.isConnected()) {
             showMoviesDataView();
             LoaderManager loaderManager = getLoaderManager();
-            loaderManager.initLoader(LOADER_ID, null, this);
+            if(loaderManager ==null){
+                loaderManager.initLoader(LOADER_ID, null, this);
+            }else{
+                loaderManager.restartLoader(LOADER_ID, null, this);
+            }
+
         } else {
             showErrorMessage();
         }
